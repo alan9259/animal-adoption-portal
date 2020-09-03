@@ -32,7 +32,7 @@ jobs:
     - name: Pack Packages
       run: dotnet pack AnimalAdoption.Common.Logic.csproj --configuration Release --no-build -p:PackageVersion=$PKG_VERSION
       working-directory: ${{ github.workspace }}/AnimalAdoption.Common.Logic/
-      #shell: bash
+      shell: bash
       env:
         PKG_VERSION: 1.0.1
   
@@ -51,7 +51,7 @@ jobs:
       
     - name: Publish
       run: dotnet publish ./AnimalAdoption.Web.Portal/AnimalAdoption.Web.Portal.csproj --configuration Release --no-build --output ${{ github.workspace }}/taa-portal/
-      #shell: bash
+      shell: bash
     - uses: actions/upload-artifact@v2
       with:
         name: animal-adoption-portal-artifact
