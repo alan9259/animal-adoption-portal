@@ -14,50 +14,40 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-        source-url: https://nuget.pkg.github.com/alan9259/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{ secrets.NUGET }}
-      
     - name: Install dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
-        
+    
+    # publish nuget packages -- start
+    - name: Pack Packages
+      run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --configuration Release --no-build --output alan9259.taa-portal\nupkgs\Release
+    
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+      
+    - name: Nuget Add Source
+      run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/alan9259/index.json" -UserName alan9259 -Password ${{ secrets.NUGET }}
+
+    - name: Nuget SetAPIKey
+      run: nuget setApiKey ${{ secrets.NUGET }} -Source "GitHub"
+
+    - name: Nuget Push
+      run: nuget push alan9259.taa-portal\nupkgs\Release\*.nupkg -Source "GitHub"
+    # publish nuget packages -- end
+      
     - name: Test
       run: dotnet test ./AnimalAdoption.Web.Portal.UnitTests/AnimalAdoption.Web.Portal.UnitTests.csproj --no-restore --verbosity normal
     - name: List out directory contents
       run: echo "Listing the contents of the GitHub workspace directory" ls ${{ github.workspace }} echo "Recursively listing all contents of the current directory" ls -R
   
-      # publish nuget packages -- start
-    #- name: Pack Packages
-     # run: dotnet pack AnimalAdoption.Common.Logic.csproj --configuration Release --no-build -p:PackageVersion=$PKG_VERSION
-    #  working-directory: ${{ github.workspace }}/AnimalAdoption.Common.Logic/
-    #  shell: bash
-    #  env:
-     #   PKG_VERSION: 1.0.1
-  
-    #- name: Setup Nuget.exe
-    #  uses: warrenbuckley/Setup-Nuget@v1
-      
-    #- name: Nuget Add Source
-     # run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/alan9259/index.json" -UserName alan9259 -Password ${{ secrets.NUGET }}
-
-   # - name: Nuget SetAPIKey
-   #   run: nuget setApiKey ${{ secrets.NUGET }} -Source "GitHub"
-
-    #- name: Nuget Push
-     # run: dotnet nuget push ${{ github.workspace }}/AnimalAdoption.Common.Logic/*.nupkg
-    # publish nuget packages -- end
-      
     - name: Publish
       run: dotnet publish ./AnimalAdoption.Web.Portal/AnimalAdoption.Web.Portal.csproj --configuration Release --no-build --output ${{ github.workspace }}/taa-portal/
-      shell: bash
     - uses: actions/upload-artifact@v2
       with:
         name: animal-adoption-portal-artifact
-        path: ${{ github.workspace }}/taa-portal/
-        if-no-files-found: error
-
+        path: ${{ github.workspace }}/taa-portal/ 
+ 
   deploy:
     needs: build
 
@@ -70,5 +60,3 @@ jobs:
         app-name: Lemon-Treats-TAA-Animal-Portal # Replace with your app name
         publish-profile: ${{ secrets.DEPLOYMENT_SECREST_DEV  }} # Define secret variable in repository settings as per action documentation
         package: '${{ github.workspace }}/taa-portal/'
-      
-    
