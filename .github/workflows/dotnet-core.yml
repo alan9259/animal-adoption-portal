@@ -45,7 +45,7 @@ jobs:
    #   run: nuget setApiKey ${{ secrets.NUGET }} -Source "GitHub"
 
     - name: Nuget Push
-      run: dotnet nuget push alan9259.taa-portal\nupkgs\Release\*.nupkg -Source "GitHub" --skip-duplicate 
+      run: dotnet nuget push alan9259.taa-portal\nupkgs\Release\*.nupkg -Source "GitHub" --skip-duplicate --api-key ${{ secrets.NUGET }}
     # publish nuget packages -- end
       
     - name: Publish
