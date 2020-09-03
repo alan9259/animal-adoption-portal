@@ -65,7 +65,7 @@ jobs:
     - name: 'Run Azure webapp deploy action using publish profile credentials'
       uses: azure/webapps-deploy@v2
       with: 
-        app-name: TAA-Animal-Portal # Replace with your app name
+        app-name: Lemon-Treats-TAA-Animal-Portal # Replace with your app name
         publish-profile: ${{ secrets.DEPLOYMENT_SECREST_DEV  }} # Define secret variable in repository settings as per action documentation
         package: '${{ github.workspace }}/taa-portal/'
       
