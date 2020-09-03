@@ -19,8 +19,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test ./AnimalAdoption.Web.Portal.UnitTests/AnimalAdoption.Web.Portal.UnitTests.csproj --no-restore --verbosity normal
     - name: List out directory contents
       run: echo "Listing the contents of the GitHub workspace directory" ls ${{ github.workspace }} echo "Recursively listing all contents of the current directory" ls -R
-    #- name: Test
-      #run: dotnet test --no-restore --verbosity normal
-      #working-directory: ${{ /animal-adoption-portal/AnimalAdoption.Web.Portal.UnitTests }}
