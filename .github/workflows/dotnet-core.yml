@@ -29,12 +29,12 @@ jobs:
       run: echo "Listing the contents of the GitHub workspace directory" ls ${{ github.workspace }} echo "Recursively listing all contents of the current directory" ls -R
   
       # publish nuget packages -- start
-    - name: Pack Packages
-      run: dotnet pack AnimalAdoption.Common.Logic.csproj --configuration Release --no-build -p:PackageVersion=$PKG_VERSION
-      working-directory: ${{ github.workspace }}/AnimalAdoption.Common.Logic/
-      shell: bash
-      env:
-        PKG_VERSION: 1.0.1
+    #- name: Pack Packages
+     # run: dotnet pack AnimalAdoption.Common.Logic.csproj --configuration Release --no-build -p:PackageVersion=$PKG_VERSION
+    #  working-directory: ${{ github.workspace }}/AnimalAdoption.Common.Logic/
+    #  shell: bash
+    #  env:
+     #   PKG_VERSION: 1.0.1
   
     #- name: Setup Nuget.exe
     #  uses: warrenbuckley/Setup-Nuget@v1
@@ -45,9 +45,8 @@ jobs:
    # - name: Nuget SetAPIKey
    #   run: nuget setApiKey ${{ secrets.NUGET }} -Source "GitHub"
 
-    - name: Nuget Push
-      run: dotnet nuget push *.nupkg
-      working-directory: ${{ github.workspace }}/AnimalAdoption.Common.Logic/
+    #- name: Nuget Push
+     # run: dotnet nuget push ${{ github.workspace }}/AnimalAdoption.Common.Logic/*.nupkg
     # publish nuget packages -- end
       
     - name: Publish
