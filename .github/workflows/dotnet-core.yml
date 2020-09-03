@@ -27,10 +27,10 @@ jobs:
       uses: warrenbuckley/Setup-Nuget@v1
       
     - name: Nuget Add Source
-      run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/alan9259/index.json" -UserName alan9259 -Password ${{ secrets.PERSONAL_TOKEN }}
+      run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/alan9259/index.json" -UserName alan9259 -Password ${{ secrets.NUGET }}
 
     - name: Nuget SetAPIKey
-      run: nuget setApiKey ${{ secrets.PERSONAL_TOKEN }} -Source "GitHub"
+      run: nuget setApiKey ${{ secrets.NUGET }} -Source "GitHub"
 
     - name: Nuget Push
       run: nuget push alan9259.taa-portal\nupkgs\Release\*.nupkg -Source "GitHub"
