@@ -22,7 +22,7 @@ jobs:
     
     # publish nuget packages -- start
     - name: Pack Packages
-      run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --c Release --no-build --output nupkgs
+      run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --no-build --output nupkgs
     
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
