@@ -30,9 +30,9 @@ jobs:
   
       # publish nuget packages -- start
     - name: Pack Packages
-      run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --configuration Release --no-build --output alan9259.taa-portal\nupkgs\Release -p:PackageVersion=$PKG_VERSION
+      run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --configuration Release --no-build -p:PackageVersion=$PKG_VERSION --output alan9259.taa-portal\nupkgs\Release 
       env:
-        PKG_VERSION: 1.0.0
+        PKG_VERSION: 1.0.1
   
     #- name: Setup Nuget.exe
     #  uses: warrenbuckley/Setup-Nuget@v1
