@@ -30,7 +30,7 @@ jobs:
   
       # publish nuget packages -- start
     - name: Pack Packages
-      run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --configuration Release --no-build -p:PackageVersion=$PKG_VERSION --output alan9259.taa-portal\nupkgs\Release 
+      run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --configuration Release --no-build -p:PackageVersion=$PKG_VERSION
       shell: bash
       env:
         PKG_VERSION: 1.0.1
@@ -45,7 +45,7 @@ jobs:
    #   run: nuget setApiKey ${{ secrets.NUGET }} -Source "GitHub"
 
     - name: Nuget Push
-      run: dotnet nuget push alan9259.taa-portal\nupkgs\Release\*.nupkg --skip-duplicate --api-key ${{ secrets.NUGET }}
+      run: dotnet nuget push *.nupkg --skip-duplicate --api-key ${{ secrets.NUGET }}
     # publish nuget packages -- end
       
     - name: Publish
@@ -56,5 +56,8 @@ jobs:
         name: animal-adoption-portal-artifact
         path: ${{ github.workspace }}/taa-portal/
         if-no-files-found: error
+
+
+
       
     
