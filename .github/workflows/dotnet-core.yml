@@ -22,7 +22,7 @@ jobs:
     
     # publish nuget packages -- start
     - name: Pack Packages
-      run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --no-build --output nupkgs
+      run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --configuration Release --no-build --output nupkgs
     
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
@@ -43,7 +43,7 @@ jobs:
       run: echo "Listing the contents of the GitHub workspace directory" ls ${{ github.workspace }} echo "Recursively listing all contents of the current directory" ls -R
   
     - name: Publish
-      run: dotnet publish ./AnimalAdoption.Web.Portal/AnimalAdoption.Web.Portal.csproj -c Release --no-build --output ${{ github.workspace }}/taa-portal/
+      run: dotnet publish ./AnimalAdoption.Web.Portal/AnimalAdoption.Web.Portal.csproj --configuration Release --no-build --output ${{ github.workspace }}/taa-portal/
     - uses: actions/upload-artifact@v2
       with:
         name: animal-adoption-portal-artifact
