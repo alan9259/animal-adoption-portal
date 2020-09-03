@@ -47,6 +47,7 @@ jobs:
 
     - name: Nuget Push
       run: dotnet nuget push *.nupkg
+      working-directory: ${{ github.workspace }}/AnimalAdoption.Common.Logic/
     # publish nuget packages -- end
       
     - name: Publish
@@ -59,6 +60,8 @@ jobs:
         if-no-files-found: error
 
   deploy:
+    needs: build
+
     runs-on: ubuntu-latest
     
     steps:
