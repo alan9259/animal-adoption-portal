@@ -7,7 +7,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest #ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -19,6 +19,24 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
+    
+    # publish nuget packages -- start
+    - name: Pack Packages
+      run: donet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --c Release --no-build --output nupkgs
+    
+    - name: Setup Nuget.exe
+      uses: warrenbuckley/Setup-Nuget@v1
+      
+    - name: Nuget Add Source
+      run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/alan9259/index.json" -UserName alan9259 -Password ${{ secrets.PERSONAL_TOKEN }}
+
+    - name: Nuget SetAPIKey
+      run: nuget setApiKey ${{ secrets.PERSONAL_TOKEN }} -Source "GitHub"
+
+    - name: Nuget Push
+      run: nuget push alan9259.taa-portal\bin\Release\*.nupkg -Source "GitHub"
+    # publish nuget packages -- end
+      
     - name: Test
       run: dotnet test ./AnimalAdoption.Web.Portal.UnitTests/AnimalAdoption.Web.Portal.UnitTests.csproj --no-restore --verbosity normal
     - name: List out directory contents
