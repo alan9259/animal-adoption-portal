@@ -50,7 +50,7 @@ jobs:
  
   deploy:
     needs: build
-    if: github.event_name == 'push'
+    if: ${{ github.event_name == 'push' && github.ref == 'master' }}
     
     runs-on: ubuntu-latest
     
