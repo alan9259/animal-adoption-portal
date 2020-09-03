@@ -20,20 +20,20 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     
     # publish nuget packages -- start
-    - name: Pack Packages
-      run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --configuration Release --no-build --output alan9259.taa-portal\nupkgs\Release
+    #- name: Pack Packages
+    #  run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --configuration Release --no-build --output alan9259.taa-portal\nupkgs\Release
     
-    - name: Setup Nuget.exe
-      uses: warrenbuckley/Setup-Nuget@v1
+    #- name: Setup Nuget.exe
+    #  uses: warrenbuckley/Setup-Nuget@v1
       
-    - name: Nuget Add Source
-      run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/alan9259/index.json" -UserName alan9259 -Password ${{ secrets.NUGET }}
+   # - name: Nuget Add Source
+    #  run: nuget source Add -Name "GitHub" -Source "https://nuget.pkg.github.com/alan9259/index.json" -UserName alan9259 -Password ${{ secrets.NUGET }}
 
-    - name: Nuget SetAPIKey
-      run: nuget setApiKey ${{ secrets.NUGET }} -Source "GitHub"
+   # - name: Nuget SetAPIKey
+    #  run: nuget setApiKey ${{ secrets.NUGET }} -Source "GitHub"
 
-    - name: Nuget Push
-      run: nuget push alan9259.taa-portal\nupkgs\Release\*.nupkg -Source "GitHub" -SkipDuplicate
+    #- name: Nuget Push
+    #  run: nuget push alan9259.taa-portal\nupkgs\Release\*.nupkg -Source "GitHub" -SkipDuplicate
     # publish nuget packages -- end
       
     - name: Test
@@ -45,7 +45,7 @@ jobs:
       run: dotnet publish ./AnimalAdoption.Web.Portal/AnimalAdoption.Web.Portal.csproj --configuration Release --no-build --output ${{ github.workspace }}/taa-portal/
     - uses: actions/upload-artifact@v2
       with:
-        name: Lemon-Treats-TAA-Animal-Portal
+        name: TAA-Animal-Portal-Artifact
         path: ${{ github.workspace }}/taa-portal
  
   deploy:
@@ -54,6 +54,13 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/download-artifact@v2
+      id: download
+      with:
+        name: 'TAA-Animal-Portal-Artifact'
+        path: ${{ github.workspace }}/taa-portal
     - name: 'Run Azure webapp deploy action using publish profile credentials'
       uses: azure/webapps-deploy@v2
       with: 
