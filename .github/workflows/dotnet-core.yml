@@ -31,6 +31,7 @@ jobs:
       # publish nuget packages -- start
     - name: Pack Packages
       run: dotnet pack ./AnimalAdoption.Common.Logic/AnimalAdoption.Common.Logic.csproj --configuration Release --no-build -p:PackageVersion=$PKG_VERSION --output alan9259.taa-portal\nupkgs\Release 
+      shell: bash
       env:
         PKG_VERSION: 1.0.1
   
