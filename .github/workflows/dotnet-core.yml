@@ -45,8 +45,8 @@ jobs:
       run: dotnet publish ./AnimalAdoption.Web.Portal/AnimalAdoption.Web.Portal.csproj --configuration Release --no-build --output ${{ github.workspace }}/taa-portal/
     - uses: actions/upload-artifact@v2
       with:
-        name: animal-adoption-portal-artifact
-        path: ${{ github.workspace }}/taa-portal/ 
+        name: Lemon-Treats-TAA-Animal-Portal
+        path: ${{ github.workspace }}/taa-portal
  
   deploy:
     needs: build
@@ -59,4 +59,4 @@ jobs:
       with: 
         app-name: Lemon-Treats-TAA-Animal-Portal # Replace with your app name
         publish-profile: ${{ secrets.DEPLOYMENT_SECREST_DEV  }} # Define secret variable in repository settings as per action documentation
-        package: '${{ github.workspace }}/taa-portal/'
+        package: '${{ github.workspace }}/taa-portal'
