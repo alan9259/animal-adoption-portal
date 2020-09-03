@@ -26,4 +26,9 @@ jobs:
   
     - name: Publish
       run: dotnet publish ./AnimalAdoption.Web.Portal/AnimalAdoption.Web.Portal.csproj --no-restore
+    - uses: actions/upload-artifact@v2
+      with:
+        name: animal-adoption-portal-artifact
+        path: ${{ github.workspace }}/AnimalAdoption.Web.Portal/bin/Debug/netcoreapp3.1/publish/
+      
     
