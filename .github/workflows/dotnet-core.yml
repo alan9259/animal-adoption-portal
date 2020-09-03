@@ -30,7 +30,7 @@ jobs:
   
       # publish nuget packages -- start
     - name: Pack Packages
-      run: dotnet pack AnimalAdoption.Common.Logic.csproj --configuration Release --no-build -p:PackageVersion=$PKG_VERSION -o
+      run: dotnet pack AnimalAdoption.Common.Logic.csproj --configuration Release --no-build -p:PackageVersion=$PKG_VERSION
       working-directory: ${{ github.workspace }}/AnimalAdoption.Common.Logic/
       #shell: bash
       env:
