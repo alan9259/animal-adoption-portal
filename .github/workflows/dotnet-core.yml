@@ -72,14 +72,39 @@ jobs:
     - uses: azure/login@v1
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
+
+    # app settings from github secret
+    # - uses: azure/appservice-settings@v1
+    #   with:
+    #     app-name: 'Lemon-Treats-TAA-Animal-Portal'
+    #     #slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
+    #     app-settings-json: '${{ secrets.APP_SETTINGS }}' 
+    #     #connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
+    #     general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
+    #   id: settings
+
+    # app settings from azure key vault
+    - uses: Azure/get-keyvault-secrets@v1.0
+      with:
+        keyvault: "taa-key-vault"
+        secrets: 'SimulatedFailureChance, GlobalPassword'
+      id: myGetSecretAction
     - uses: azure/appservice-settings@v1
       with:
         app-name: 'Lemon-Treats-TAA-Animal-Portal'
         #slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
-        app-settings-json: '${{ secrets.APP_SETTINGS }}' 
+        app-settings-json: '[
+                              {
+                                "GlobalPassword": "asdsad",
+                                "value": ${{ steps.myGetSecretAction.outputs.GlobalPassword }},
+                                "slotSetting": false
+                              },
+                              {
+                                "SimulatedFailureChance": "asdsad",
+                                "value": ${{ steps.myGetSecretAction.outputs.SimulatedFailureChance }},
+                                "slotSetting": false
+                              }
+                            ]' 
         #connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
         general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
       id: settings
-    - run: echo "The webapp-url is ${{ steps.settings.outputs.webapp-url }}"
-    - run: |
-        az logout
