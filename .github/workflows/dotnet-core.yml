@@ -4,6 +4,14 @@ on:
   push:
     branches: [ master ]
 
+env: 
+  PROD_RESOURCE_GROUP_NAME: GitHubDevOps-2020-09-03-team-01-prod
+  DEPLOY_LOCATION: australiaeast
+  AG_TENANT_GUID: ab5eb3d0-6067-40ee-b4c0-a2ce05dbf039
+  PROD_APP_SERVICE_PLAN_NAME: ASP-GitHubDevOps20200903team01dev-98cb
+  PROD_KEY_VAULT_NAME: taa-key-vault
+  PROD_WEB_APP_NAME: Lemon-Treats-TAA-Animal-Portal-Prod
+
 jobs:
   build:
     runs-on: windows-latest #ubuntu-latest
@@ -123,11 +131,4 @@ jobs:
           keyVaultName=${{ env.PROD_KEY_VAULT_NAME }}
           webAppName=${{ env.PROD_WEB_APP_NAME }}
           resourceGroupServicePrincipalManagedApplicationObjectId=${{ secrets.TAA_SP_MANAGED_APP_OBJECT_ID }}
-        env: |
-          PROD_RESOURCE_GROUP_NAME: GitHubDevOps-2020-09-03-team-01-prod
-          DEPLOY_LOCATION: australiaeast
-          AG_TENANT_GUID: ab5eb3d0-6067-40ee-b4c0-a2ce05dbf039
-          PROD_APP_SERVICE_PLAN_NAME: ASP-GitHubDevOps20200903team01dev-98cb
-          PROD_KEY_VAULT_NAME: taa-key-vault
-          PROD_WEB_APP_NAME: Lemon-Treats-TAA-Animal-Portal-Prod
 
