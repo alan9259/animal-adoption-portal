@@ -109,6 +109,6 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         resourceGroupName: GitHubDevOps-2020-09-03-team-01-prod
-        templateLocation: ./ARM.json
+        templateLocation: ${{ github.workspace }}/ARM.json
         parameters: '${{ secrets.APP_SECRETS }}'
         deploymentName: taa-animal-portal-prod-deployment
