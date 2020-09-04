@@ -105,11 +105,28 @@ jobs:
     
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - uses: whiteducksoftware/azure-arm-action@v3.2
+    
+    - name: Deploy resources to the Test Resource Group using an ARM template
+      uses: actions/checkout@master
+      uses: whiteducksoftware/azure-arm-action@v3.2
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-        resourceGroupName: GitHubDevOps-2020-09-03-team-01-prod
+        creds: ${{ secrets.AZURE_CREDENTIALS_PROD }}
+        resourceGroupName: ${{ env.PROD_RESOURCE_GROUP_NAME }}
         templateLocation: ${{ github.workspace }}/ARM.json
-        parameters: '${{ secrets.APP_SECRETS }}'
-        deploymentName: taa-animal-portal-prod-deployment
+        deploymentName: taa-animal-portal-prod-deploy
+        deploymentMode: Incremental
+        overrideParameters: |
+          resourceLocation=${{ env.DEPLOY_LOCATION }}
+          tenantGuid=${{ secrets.AG_TENANT_GUID }}
+          appServicePlanName=${{ env.PROD_APP_SERVICE_PLAN_NAME }}
+          keyVaultName=${{ env.PROD_KEY_VAULT_NAME }}
+          webAppName=${{ env.PROD_WEB_APP_NAME }}
+          resourceGroupServicePrincipalManagedApplicationObjectId=${{ secrets.TAA_SP_MANAGED_APP_OBJECT_ID }}
+        env:
+          PROD_RESOURCE_GROUP_NAME: GitHubDevOps-2020-09-03-team-01-prod
+          DEPLOY_LOCATION: australiaeast
+          AG_TENANT_GUID: ab5eb3d0-6067-40ee-b4c0-a2ce05dbf039
+          PROD_APP_SERVICE_PLAN_NAME: ASP-GitHubDevOps20200903team01dev-98cb
+          PROD_KEY_VAULT_NAME: taa-key-vault
+          PROD_WEB_APP_NAME: Lemon-Treats-TAA-Animal-Portal-Prod
+
