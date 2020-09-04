@@ -114,7 +114,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS_PROD }}
         resourceGroupName: ${{ env.PROD_RESOURCE_GROUP_NAME }}
         templateLocation: ${{ github.workspace }}/ARM.json
-        deploymentName: taa-animal-portal-prod-deploy
+        deploymentName: taa-prod-deploy
         deploymentMode: Incremental
         overrideParameters: |
           resourceLocation=${{ env.DEPLOY_LOCATION }}
