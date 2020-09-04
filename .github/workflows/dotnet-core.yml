@@ -97,3 +97,18 @@ jobs:
         #connection-strings-json: '${{ secrets.CONNECTION_STRINGS }}'
         general-settings-json: '{"alwaysOn": "false", "webSocketsEnabled": "true"}' #'General configuration settings as Key Value pairs'
       id: settings
+
+  
+  arm-deploy:
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    
+    runs-on: ubuntu-latest
+    steps:
+    - uses: whiteducksoftware/azure-arm-action@v3.2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        resourceGroupName: GitHubDevOps-2020-09-03-team-01-prod
+        templateLocation: ./ARM.json
+        parameters: '${{ secrets.APP_SECRETS }}'
+        deploymentName: taa-animal-portal-prod-deployment
