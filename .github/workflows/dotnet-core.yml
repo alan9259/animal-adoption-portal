@@ -123,7 +123,7 @@ jobs:
           keyVaultName=${{ env.PROD_KEY_VAULT_NAME }}
           webAppName=${{ env.PROD_WEB_APP_NAME }}
           resourceGroupServicePrincipalManagedApplicationObjectId=${{ secrets.TAA_SP_MANAGED_APP_OBJECT_ID }}
-        env:
+        env: |
           PROD_RESOURCE_GROUP_NAME: GitHubDevOps-2020-09-03-team-01-prod
           DEPLOY_LOCATION: australiaeast
           AG_TENANT_GUID: ab5eb3d0-6067-40ee-b4c0-a2ce05dbf039
